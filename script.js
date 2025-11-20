@@ -2,7 +2,6 @@ const form = document.getElementById("audienceForm");
 const personaContainer = document.getElementById("personaContainer");
 const strategyOutput = document.getElementById("strategyOutput");
 const timelineContainer = document.getElementById("timeline");
-const simulateBtn = document.getElementById("simulateBtn");
 
 const defaultData = {
   goal: "提升新品转化",
@@ -14,27 +13,22 @@ const defaultData = {
 
 function buildPersonas({ goal, industry, age, region, tags }) {
   const baseDemand = goal.includes("唤醒") ? "二次触达" : "新品种草";
+  const firstTag = (tags || "").split("、")[0] || "核心场景";
+
   return [
     {
       name: `${industry}数字先锋`,
-      size: "占比 45%",
-      description: `${region}${age}，偏好线上研究${industry}，重视体验升级。`,
-      needs: ["体验短片/开箱", `强调${baseDemand}优惠`, "以旧换新补贴"],
-      channels: ["视频号", "B 站科技区", "品牌社区"],
+      size: "核心 45%",
+      description: `${region}、${age}，偏好线上研究与体验升级。`,
+      needs: ["体验短片/开箱", `强调${baseDemand}优惠`],
+      channels: ["视频号", "品牌社区"],
     },
     {
       name: "理性性价比派",
-      size: "占比 32%",
+      size: "补充 35%",
       description: `关注预算与长期使用成本，常浏览评测与团购信息。`,
-      needs: ["参数对比表", `${tags.split("、")[0]}场景案例`, "售后服务保障"],
-      channels: ["知乎", "垂直科技媒体", "企业微信社群"],
-    },
-    {
-      name: "潜力会员",
-      size: "占比 23%",
-      description: `沉睡会员，近期对${industry}内容互动升高，适合唤醒。`,
-      needs: ["限时回归礼包", "专属客服跟进", `${region}线下体验券`],
-      channels: ["短信", "APP Push", "线下门店"],
+      needs: ["参数对比", `${firstTag}案例`],
+      channels: ["知乎", "垂直科技媒体"],
     },
   ];
 }
@@ -60,37 +54,55 @@ function renderPersonas(personas) {
 }
 
 function buildStrategy(personas, goal) {
-  const cadences = [
-    {
-      title: "触达节奏",
-      items: [
-        "T+0 热点引爆：社媒/视频平台直播体验",
-        "T+2 深度教育：行业白皮书 + 评测内容",
-        "T+5 转化加码：专属优惠券 + 私域 1v1",
-      ],
-    },
-    {
-      title: "内容策略",
-      items: personas.map((persona) => `${persona.name}：${persona.needs[0]} & ${persona.needs[1]}`),
-    },
-    {
-      title: "成功衡量",
-      items: [
-        goal.includes("转化") ? "新品支付转化率" : "回流购买率",
-        "互动率 / 内容完播率",
-        "私域成交金额",
-      ],
-    },
+  const channelOptions = [
+    "短信：新品上线提醒 + 限时券",
+    "邮件：参数对比/开箱报告",
+    "视频号：直播体验 + 技术亮点",
+    "社群：私域 1v1 解答与加码券",
   ];
 
-  strategyOutput.innerHTML = cadences
+  const copyIdeas = personas.map(
+    (persona) =>
+      `${persona.name}｜以${persona.needs[0]}打头，辅以${persona.needs[1]}; 强调「${
+        goal.includes("转化") ? "新品体验升级+限时券" : "会员回归礼包+专属客服"
+      }」，引导点击落地页并追加私域咨询入口。`
+  );
+
+  strategyOutput.innerHTML = personas
     .map(
-      (block) => `
-      <article class="strategy-block">
-        <h4>${block.title}</h4>
-        <ul>
-          ${block.items.map((item) => `<li>${item}</li>`).join("")}
-        </ul>
+      (persona, idx) => `
+      <article class="strategy-card">
+        <header class="strategy-card__head">
+          <div class="tag">${persona.size}</div>
+          <h3>${persona.name} 场景策略</h3>
+        </header>
+        <div class="strategy-columns">
+          <article class="strategy-block">
+            <h4>触达节奏</h4>
+            <ul>
+              <li>T+0 热点引爆：社媒视频平台直播体验</li>
+              <li>T+3 转化加码：专属优惠券 + 私域 1v1</li>
+            </ul>
+          </article>
+          <article class="strategy-block">
+            <h4>内容策略</h4>
+            <ul>
+              <li>${persona.name}：${persona.needs.join(" / ")}</li>
+            </ul>
+          </article>
+          <article class="strategy-block">
+            <h4>触达渠道</h4>
+            <ul>
+              ${channelOptions.map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </article>
+          <article class="strategy-block">
+            <h4>触达文案</h4>
+            <ul>
+              <li>${copyIdeas[idx]}</li>
+            </ul>
+          </article>
+        </div>
       </article>
     `
     )
@@ -103,6 +115,7 @@ function updateTimeline(goal) {
       title: "Agent 1 完成人群圈选",
       desc: `根据 ${goal} 场景筛选 12.4w 名候选用户，已写入数据仓库。`,
       state: "done",
+      actionLabel: "查看数据仓库",
     },
     {
       title: "Agent 2 洞察正在运行",
@@ -110,9 +123,10 @@ function updateTimeline(goal) {
       state: "running",
     },
     {
-      title: "Agent 3 策略输出待触发",
+      title: "Agent 3 策略输出待触达",
       desc: "等待营销负责人确认资源与预算配置。",
       state: "waiting",
+      actionLabel: "查看当前流程",
     },
   ];
 
@@ -120,8 +134,17 @@ function updateTimeline(goal) {
     .map(
       (item) => `
       <div class="timeline-item">
-        <h4>${item.title}</h4>
-        <p>${item.desc}</p>
+        <div class="timeline-row">
+          <div>
+            <h4>${item.title}</h4>
+            <p>${item.desc}</p>
+          </div>
+          ${
+            item.actionLabel
+              ? `<button class="timeline-btn" type="button">${item.actionLabel}</button>`
+              : ""
+          }
+        </div>
         <div class="status" data-state="${item.state}">
           <span></span>
           <strong>${item.state === "done" ? "已完成" : item.state === "running" ? "运行中" : "待执行"}</strong>
@@ -152,7 +175,5 @@ function simulateFlow() {
 }
 
 form.addEventListener("submit", handleSubmit);
-simulateBtn.addEventListener("click", simulateFlow);
-
-// 初始化默认数据
+// 初始化默认展示
 simulateFlow();

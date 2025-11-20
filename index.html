@@ -21,8 +21,40 @@
           结合数据仓库、触达系统与营销策略专家，帮助市场团队快速圈选目标人群、洞察画像并生成个性化营销方案。
         </p>
       </div>
-      <button id="simulateBtn" class="ghost-btn">一键演示完整流程</button>
     </header>
+
+    <section class="pipeline">
+      <h2>多智能体协同流程</h2>
+      <div class="pipeline-grid" id="pipeline">
+        <article>
+          <p class="step">Agent 1</p>
+          <h3>人群筛选定义</h3>
+          <ul>
+            <li>输入业务目标、算法参数等</li>
+            <li>输出可触达用户清单</li>
+            <li>写入数据仓库 (MCP)</li>
+          </ul>
+        </article>
+        <article>
+          <p class="step">Agent 2</p>
+          <h3>画像洞察分析</h3>
+          <ul>
+            <li>访问用户数据（MCP）计算兴趣图谱等</li>
+            <li>生成内容主题、痛点、KPI</li>
+            <li>同步至触达系统</li>
+          </ul>
+        </article>
+        <article>
+          <p class="step">Agent 3</p>
+          <h3>营销策略编排</h3>
+          <ul>
+            <li>选择渠道组合（短信、邮件、社媒等）</li>
+            <li>定制话术、优惠与触达节奏</li>
+            <li>输出个性化营销方案并自动化触达(MCP)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <main>
       <section class="module">
@@ -60,6 +92,24 @@
               required
             />
           </label>
+          <label class="file-upload">
+            上传特征处理后的日更数据
+            <input
+              type="file"
+              name="featureDailyData"
+              accept=".csv,.xlsx,.xls,.json,.parquet"
+            />
+            <span class="field-hint">支持 CSV / XLSX / JSON / Parquet 等格式</span>
+          </label>
+          <label class="file-upload">
+            上传算法所需相关参数
+            <input
+              type="file"
+              name="algoParams"
+              accept=".json,.yaml,.yml,.txt,.csv"
+            />
+            <span class="field-hint">可上传超参配置、规则表或约束文件</span>
+          </label>
           <button type="submit">圈选目标人群</button>
         </form>
       </section>
@@ -77,42 +127,10 @@
         <p class="module-subtitle">
           Agent 3 结合画像输出触达节奏、内容建议与渠道组合。
         </p>
-        <div id="strategyOutput" class="strategy"></div>
+        <div id="strategyOutput" class="strategy strategy-scroll"></div>
+        <button id="startTouch" class="primary-btn">开始自动触达</button>
       </section>
     </main>
-
-    <section class="pipeline">
-      <h2>多智能体协同流程</h2>
-      <div class="pipeline-grid" id="pipeline">
-        <article>
-          <p class="step">Agent 1</p>
-          <h3>人群筛选定义</h3>
-          <ul>
-            <li>输入业务目标、地域、行为标签</li>
-            <li>输出可触达用户清单</li>
-            <li>写入数据仓库 (MCP)</li>
-          </ul>
-        </article>
-        <article>
-          <p class="step">Agent 2</p>
-          <h3>画像洞察分析</h3>
-          <ul>
-            <li>计算资产价值与兴趣图谱</li>
-            <li>生成内容主题、痛点、KPI</li>
-            <li>同步至触达系统</li>
-          </ul>
-        </article>
-        <article>
-          <p class="step">Agent 3</p>
-          <h3>营销策略编排</h3>
-          <ul>
-            <li>选择渠道组合（短信、邮件、社媒等）</li>
-            <li>定制话术、优惠与触达节奏</li>
-            <li>输出个性化营销方案</li>
-          </ul>
-        </article>
-      </div>
-    </section>
 
     <section class="timeline">
       <h2>实时执行看板</h2>
@@ -120,7 +138,7 @@
     </section>
 
     <footer>
-      <p>© 2024 多智能体协同营销实验室</p>
+      <p>© 2025 聚好看智能圈选与自动营销团队</p>
     </footer>
 
     <script src="script.js"></script>
