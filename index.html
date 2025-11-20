@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>多智能体协同营销策略平台</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="subtitle">MCP 多智能体协同平台</p>
+        <h1>从圈选目标到个性化营销的一站式体验</h1>
+        <p>
+          结合数据仓库、触达系统与营销策略专家，帮助市场团队快速圈选目标人群、洞察画像并生成个性化营销方案。
+        </p>
+      </div>
+      <button id="simulateBtn" class="ghost-btn">一键演示完整流程</button>
+    </header>
+
+    <main>
+      <section class="module">
+        <h2>🎯 圈选目标人群</h2>
+        <p class="module-subtitle">
+          Agent 1 负责根据业务目标筛选核心用户，并将结果写入数据仓库。
+        </p>
+        <form id="audienceForm">
+          <label>
+            业务目标
+            <select name="goal" required>
+              <option value="提升新品转化">提升新品转化</option>
+              <option value="唤醒沉睡用户">唤醒沉睡用户</option>
+              <option value="会员拉新">会员拉新</option>
+            </select>
+          </label>
+          <label>
+            行业/产品
+            <input type="text" name="industry" placeholder="例如：智能家电" required />
+          </label>
+          <label>
+            目标年龄
+            <input type="text" name="age" placeholder="例如：25-35 岁" required />
+          </label>
+          <label>
+            地区
+            <input type="text" name="region" placeholder="例如：一线城市" required />
+          </label>
+          <label>
+            行为标签
+            <input
+              type="text"
+              name="tags"
+              placeholder="例如：关注智能生活、以旧换新"
+              required
+            />
+          </label>
+          <button type="submit">圈选目标人群</button>
+        </form>
+      </section>
+
+      <section class="module">
+        <h2>🧠 人群画像分析</h2>
+        <p class="module-subtitle">
+          Agent 2 挖掘用户需求与内容偏好，生成可执行的细分画像。
+        </p>
+        <div id="personaContainer" class="cards"></div>
+      </section>
+
+      <section class="module">
+        <h2>💡 个性化营销策略</h2>
+        <p class="module-subtitle">
+          Agent 3 结合画像输出触达节奏、内容建议与渠道组合。
+        </p>
+        <div id="strategyOutput" class="strategy"></div>
+      </section>
+    </main>
+
+    <section class="pipeline">
+      <h2>多智能体协同流程</h2>
+      <div class="pipeline-grid" id="pipeline">
+        <article>
+          <p class="step">Agent 1</p>
+          <h3>人群筛选定义</h3>
+          <ul>
+            <li>输入业务目标、地域、行为标签</li>
+            <li>输出可触达用户清单</li>
+            <li>写入数据仓库 (MCP)</li>
+          </ul>
+        </article>
+        <article>
+          <p class="step">Agent 2</p>
+          <h3>画像洞察分析</h3>
+          <ul>
+            <li>计算资产价值与兴趣图谱</li>
+            <li>生成内容主题、痛点、KPI</li>
+            <li>同步至触达系统</li>
+          </ul>
+        </article>
+        <article>
+          <p class="step">Agent 3</p>
+          <h3>营销策略编排</h3>
+          <ul>
+            <li>选择渠道组合（短信、邮件、社媒等）</li>
+            <li>定制话术、优惠与触达节奏</li>
+            <li>输出个性化营销方案</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="timeline">
+      <h2>实时执行看板</h2>
+      <div id="timeline"></div>
+    </section>
+
+    <footer>
+      <p>© 2024 多智能体协同营销实验室</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
